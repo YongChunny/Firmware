@@ -77,7 +77,13 @@ private:
 
 	uORB::Publication<vehicle_acceleration_s> _vehicle_acceleration_pub{ORB_ID(vehicle_acceleration)};
 
-	uORB::Subscription _estimator_sensor_bias_sub{ORB_ID(estimator_sensor_bias)};
+	uORB::Subscription _estimator_sensor_bias_sub[ORB_MULTI_MAX_INSTANCES] {
+		{ORB_ID(estimator_sensor_bias), 0},
+		{ORB_ID(estimator_sensor_bias), 1},
+		{ORB_ID(estimator_sensor_bias), 2},
+		{ORB_ID(estimator_sensor_bias), 3},
+	};
+
 	uORB::Subscription _params_sub{ORB_ID(parameter_update)};
 
 	uORB::SubscriptionCallbackWorkItem _sensor_selection_sub{this, ORB_ID(sensor_selection)};

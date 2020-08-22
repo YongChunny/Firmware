@@ -1,4 +1,6 @@
 uint64 timestamp		# time since system start (microseconds)
+uint64 timestamp_sample         # the timestamp of the raw data (microseconds)
+
 float32[24] states		# Internal filter states
 uint8 n_states		# Number of states effectively used
 
@@ -113,6 +115,11 @@ bool pre_flt_fail_innov_vel_horiz
 bool pre_flt_fail_innov_vel_vert
 bool pre_flt_fail_innov_height
 bool pre_flt_fail_mag_field_disturbed
+
+uint32 accel_device_id
+uint32 gyro_device_id
+uint32 baro_device_id
+uint32 mag_device_id
 
 # legacy local position estimator (LPE) flags
 uint8 health_flags		# Bitmask to indicate sensor health states (vel, pos, hgt)

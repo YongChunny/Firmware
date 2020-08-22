@@ -140,15 +140,15 @@ void VehicleAcceleration::CheckFilters()
 
 void VehicleAcceleration::SensorBiasUpdate(bool force)
 {
-	if (_estimator_sensor_bias_sub.updated() || force) {
-		estimator_sensor_bias_s bias;
+	for (int i = 0; i < ORB_MULTI_MAX_INSTANCES; i++) {
+		if (_estimator_sensor_bias_sub[i].updated() || force) {
+			estimator_sensor_bias_s bias;
 
-		if (_estimator_sensor_bias_sub.copy(&bias)) {
-			if (bias.accel_device_id == _selected_sensor_device_id) {
-				_bias = Vector3f{bias.accel_bias};
-
-			} else {
-				_bias.zero();
+			if (_estimator_sensor_bias_sub[i].copy(&bias)) {
+				if (bias.accel_device_id == _selected_sensor_device_id) {
+					_bias = Vector3f{bias.accel_bias};
+					return;
+				}
 			}
 		}
 	}
